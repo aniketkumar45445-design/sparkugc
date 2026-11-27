@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SparkUGC™ | AI UGC Ads & Creative Agency</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,700;0,800;1,700;1,800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            obsidian: '#050508',
+            cardDark: '#0B0B12',
+            neonPurple: '#9D00FF',
+            electricViolet: '#B829FF',
+            deepViolet: '#7000FF',
+          },
+          boxShadow: {
+            'neon': '0 0 25px rgba(157, 0, 255, 0.45)',
+            'neon-strong': '0 0 40px rgba(184, 41, 255, 0.65)',
+            'neon-subtle': '0 0 18px rgba(157, 0, 255, 0.22)',
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #050508;
+      color: #F4F4F8;
+      overflow-x: hidden;
+    }
+
+    /* Metallic Chrome Text Gradient matching the SparkUGC Logo */
+    .chrome-text {
+      background: linear-gradient(180deg, #FFFFFF 0%, #E2E4EC 48%, #989CAE 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Neon Purple Gradient matching the UGC & Swoosh in Logo */
+    .neon-purple-text {
+      background: linear-gradient(135deg, #D96BFF 0%, #9D00FF 52%, #6800E6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Glowing Pill & Card Borders */
+    .neon-border-glow {
+      border: 1px solid rgba(184, 41, 255, 0.45);
+      box-shadow: 0 0 24px rgba(157, 0, 255, 0.2), inset 0 0 16px rgba(157, 0, 255, 0.08);
+    }
+
+    .neon-border-active {
+      border: 1.5px solid #B829FF;
+      box-shadow: 0 0 32px rgba(184, 41, 255, 0.45), inset 0 0 20px rgba(157, 0, 255, 0.15);
+    }
+
+    /* Ambient Background Radial Glows */
+    .ambient-orb {
+      background: radial-gradient(circle, rgba(157, 0, 255, 0.22) 0%, rgba(112, 0, 255, 0.06) 45%, rgba(5, 5, 8, 0) 70%);
+      pointer-events: none;
+    }
+
+    /* Animated Waveform Bars for AI Reels */
+    @keyframes wavePulse {
+      0%, 100% { transform: scaleY(0.35); }
+      50% { transform: scaleY(1); }
+    }
+    .wave-bar {
+      animation: wavePulse 0.9s ease-in-out infinite;
+      transform-origin: center;
+    }
+    .paused-wave .wave-bar {
+      animation-play-state: paused;
+      transform: scaleY(0.35);
+    }
+
+    /* Custom Range Slider Styling */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      background: rgba(255, 255, 255, 0.1);
+      height: 6px;
+      border-radius: 999px;
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #E285FF, #9D00FF);
+      border: 2px solid #FFFFFF;
+      box-shadow: 0 0 15px rgba(184, 41, 255, 0.9);
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+
+    /* Subtle Grid Overlay */
+    .bg-grid-pattern {
+      background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-neonPurple selection:text-white">
+
+  <!-- Toast Notification Banner (No alert() used) -->
+  <div id="toastBanner" class="fixed bottom-6 right-6 z-50 hidden transform transition-all duration-300 translate-y-4 opacity-0">
+    <div class="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-[#10101A]/95 backdrop-blur-xl neon-border-active text-sm font-medium text-white shadow-2xl">
+      <span class="flex h-7 w-7 items-center justify-center rounded-full bg-neonPurple/30 text-electricViolet">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+      </span>
+      <span id="toastMessage">Hook template copied to campaign brief!</span>
+    </div>
+  </div>
+
+  <!-- 1. TOP STICKY GLASSMORPHIC NAVIGATION -->
+  <header class="sticky top-0 z-40 w-full bg-[#050508]/80 backdrop-blur-xl border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Custom SVG Recreation of SparkUGC Emblem + Brand Name -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="relative w-11 h-11 flex items-center justify-center">
+          <svg viewBox="0 0 120 120" class="w-11 h-11 drop-shadow-[0_0_12px_rgba(184,41,255,0.75)] transition-transform duration-300 group-hover:scale-105">
+            <defs>
+              <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#E5E7EB"/>
+                <stop offset="35%" stop-color="#B829FF"/>
+                <stop offset="70%" stop-color="#7000FF"/>
+                <stop offset="100%" stop-color="#FFFFFF"/>
+              </linearGradient>
+              <linearGradient id="chromeS" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFFFFF"/>
+                <stop offset="55%" stop-color="#D1D5DB"/>
+                <stop offset="100%" stop-color="#9D00FF"/>
+              </linearGradient>
+              <linearGradient id="purpleSwoosh" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#7000FF"/>
+                <stop offset="55%" stop-color="#B829FF"/>
+                <stop offset="100%" stop-color="#F0ABFC"/>
+              </linearGradient>
+            </defs>
+            <!-- Outer Glowing Ring -->
+            <circle cx="60" cy="60" r="54" fill="#050508" stroke="url(#ringGrad)" stroke-width="3.5"/>
+            <circle cx="60" cy="60" r="48" fill="none" stroke="rgba(184,41,255,0.35)" stroke-width="1"/>
+            <!-- Stylized S Top & Bottom -->
+            <path d="M78 33 C62 27, 36 29, 34 45 C32 58, 52 62, 65 66 C76 69, 77 81, 61 85 C47 88, 34 83, 29 79 L39 68 C47 73, 62 74, 64 67 C66 60, 48 56, 36 51 C24 46, 24 27, 46 22 C63 18, 79 22, 86 27 Z" fill="url(#chromeS)"/>
+            <!-- Center Play Triangle -->
+            <polygon points="53,47 53,71 73,59" fill="#FFFFFF"/>
+            <!-- Orbiting Neon Swoosh -->
+            <path d="M20 75 C14 91, 45 96, 78 80 C102 68, 110 49, 98 41 C104 49, 94 64, 72 74 C44 87, 23 84, 24 72 Z" fill="url(#purpleSwoosh)"/>
+            <!-- 4-Point Sparkle Star -->
+            <path d="M94 14 L96.5 22.5 L105 25 L96.5 27.5 L94 36 L91.5 27.5 L83 25 L91.5 22.5 Z" fill="#FFFFFF"/>
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <div class="flex items-start leading-none">
+            <span class="font-display font-extrabold italic text-2xl tracking-tight chrome-text">Spark</span>
+            <span class="font-display font-extrabold italic text-2xl tracking-tight neon-purple-text">UGC</span>
+            <span class="text-[10px] font-bold text-gray-400 ml-0.5 mt-0.5">TM</span>
+          </div>
+          <span class="text-[9px] tracking-[0.2em] text-gray-400 font-semibold uppercase mt-1">AI UGC Ads &amp; Creative Agency</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-300">
+        <a href="#showcase" class="hover:text-white transition-colors">AI Reels</a>
+        <a href="#pillars" class="hover:text-white transition-colors">Services</a>
+        <a href="#process" class="hover:text-white transition-colors">4-Step Engine</a>
+        <a href="#calculator" class="hover:text-white transition-colors">ROI Calculator</a>
+        <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
+      </nav>
+
+      <!-- CTA & Mobile Toggle -->
+      <div class="flex items-center gap-3">
+        <button onclick="openBriefModal('Strategy Call')" class="px-5 py-2.5 rounded-full text-sm font-bold text-white bg-gradient-to-r from-deepViolet via-neonPurple to-electricViolet shadow-neon hover:shadow-neon-strong transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer">
+          Book Strategy Call
+        </button>
+        <button id="mobileMenuBtn" class="lg:hidden p-2.5 rounded-xl bg-white/5 border border-white/10 text-gray-200 hover:text-white" aria-label="Toggle Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenu" class="hidden lg:hidden bg-[#08080F] border-b border-white/10 px-6 py-5 space-y-4">
+      <a href="#showcase" onclick="toggleMobileMenu()" class="block text-base font-medium text-gray-300 hover:text-white">AI Reels Showcase</a>
+      <a href="#pillars" onclick="toggleMobileMenu()" class="block text-base font-medium text-gray-300 hover:text-white">Core Pillars &amp; Services</a>
+      <a href="#process" onclick="toggleMobileMenu()" class="block text-base font-medium text-gray-300 hover:text-white">4-Step Done-For-You Engine</a>
+      <a href="#calculator" onclick="toggleMobileMenu()" class="block text-base font-medium text-gray-300 hover:text-white">ROAS &amp; Savings Calculator</a>
+      <a href="#pricing" onclick="toggleMobileMenu()" class="block text-base font-medium text-gray-300 hover:text-white">Pricing Packages</a>
+    </div>
+  </header>
+
+  <!-- 2. HERO SECTION -->
+  <section class="relative pt-14 pb-20 lg:pt-24 lg:pb-28 bg-grid-pattern overflow-hidden">
+    <!-- Ambient Purple Glow Orbs -->
+    <div class="ambient-orb absolute -top-32 left-1/2 -translate-x-1/2 w-[780px] h-[520px] rounded-full blur-3xl"></div>
+    <div class="ambient-orb absolute top-40 -right-40 w-[480px] h-[480px] rounded-full blur-3xl"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <!-- Glowing Purple Pill Badge -->
+      <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#12091F]/90 neon-border-glow mb-8">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-electricViolet opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-electricViolet"></span>
+        </span>
+        <span class="text-xs sm:text-sm font-bold tracking-wider uppercase text-purple-200">
+          NEXT-GEN PERFORMANCE CREATIVE STUDIO
+        </span>
+      </div>
+
+      <!-- Bold Headline matching Tagline -->
+      <h1 class="font-display font-extrabold italic text-4xl sm:text-6xl lg:text-7xl tracking-tight leading-[1.08] max-w-5xl mx-auto">
+        <span class="chrome-text">Real Stories.</span>
+        <span class="neon-purple-text px-1">AI Creators.</span>
+        <span class="chrome-text block sm:inline">Viral Results.</span>
+      </h1>
+
+      <!-- Subheadline -->
+      <p class="mt-6 max-w-2xl mx-auto text-base sm:text-lg lg:text-xl text-gray-300 leading-relaxed font-normal">
+        SparkUGC blends hyper-realistic AI avatars, voice cloning, and direct-response hook psychology to scale your Meta &amp; TikTok ROAS—with zero product shipping delays or creator bottlenecks.
+      </p>
+
+      <!-- Dual CTAs -->
+      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <button onclick="openBriefModal('Launch Campaign')" class="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-base text-white bg-gradient-to-r from-deepViolet via-neonPurple to-electricViolet shadow-neon hover:shadow-neon-strong transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center gap-2.5 cursor-pointer">
+          <span>Launch Your Campaign</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        </button>
+
+        <a href="#showcase" class="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-base text-white bg-white/[0.04] hover:bg-white/[0.09] neon-border-glow transition-all duration-300 flex items-center justify-center gap-2.5">
+          <span class="w-6 h-6 rounded-full bg-neonPurple/30 flex items-center justify-center text-electricViolet">
+            <svg class="w-3.5 h-3.5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+          <span>Watch AI Reels</span>
+        </a>
+      </div>
+
+      <!-- Live Performance Metrics Bar -->
+      <div class="mt-16 max-w-5xl mx-auto rounded-3xl bg-[#0B0B13]/90 backdrop-blur-xl neon-border-glow p-6 sm:p-8">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
+          <div class="pt-2 sm:pt-0">
+            <div class="font-display font-extrabold text-3xl sm:text-4xl neon-purple-text">8.7x</div>
+            <div class="text-xs sm:text-sm font-medium text-gray-400 mt-1 uppercase tracking-wider">Avg. Blended ROAS</div>
+          </div>
+          <div class="pt-4 sm:pt-0 sm:pl-6">
+            <div class="font-display font-extrabold text-3xl sm:text-4xl chrome-text">3.4x</div>
+            <div class="text-xs sm:text-sm font-medium text-gray-400 mt-1 uppercase tracking-wider">Higher 3-Sec Hook Rate</div>
+          </div>
+          <div class="pt-4 lg:pt-0 lg:pl-6">
+            <div class="font-display font-extrabold text-3xl sm:text-4xl neon-purple-text">48-Hr</div>
+            <div class="text-xs sm:text-sm font-medium text-gray-400 mt-1 uppercase tracking-wider">Ad Delivery Turnaround</div>
+          </div>
+          <div class="pt-4 lg:pt-0 lg:pl-6">
+            <div class="font-display font-extrabold text-3xl sm:text-4xl chrome-text">1,000+</div>
+            <div class="text-xs sm:text-sm font-medium text-gray-400 mt-1 uppercase tracking-wider">AI &amp; Hybrid Creators</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. INTERACTIVE AI UGC AD SHOWCASE (VERTICAL 9:16 REELS SIMULATOR) -->
+  <section id="showcase" class="py-20 lg:py-28 relative border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Section Header -->
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+        <div>
+          <span class="text-xs font-bold tracking-[0.2em] uppercase text-electricViolet">LIVE AD VAULT</span>
+          <h2 class="font-display font-extrabold text-3xl sm:text-5xl mt-2 chrome-text">
+            High-Converting AI Reels
+          </h2>
+          <p class="text-gray-400 mt-3 max-w-xl text-sm sm:text-base">
+            Preview real direct-response hooks generated with our proprietary AI creator engine. Toggle playback or clone any winning hook structure directly into your brief.
+          </p>
+        </div>
+
+        <!-- Category Filter Tabs -->
+        <div id="filterTabs" class="flex flex-wrap gap-2">
+          <button data-filter="all" class="filter-btn active px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-gradient-to-r from-deepViolet to-neonPurple text-white shadow-neon cursor-pointer transition-all">
+            All Ads
+          </button>
+          <button data-filter="skincare" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white/5 text-gray-300 hover:text-white border border-white/10 cursor-pointer transition-all">
+            Skincare &amp; Beauty
+          </button>
+          <button data-filter="saas" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white/5 text-gray-300 hover:text-white border border-white/10 cursor-pointer transition-all">
+            SaaS &amp; Apps
+          </button>
+          <button data-filter="ecom" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white/5 text-gray-300 hover:text-white border border-white/10 cursor-pointer transition-all">
+            E-Commerce / DTC
+          </button>
+          <button data-filter="fitness" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white/5 text-gray-300 hover:text-white border border-white/10 cursor-pointer transition-all">
+            Fitness
+          </button>
+        </div>
+      </div>
+
+      <!-- 9:16 Vertical Phone-Frame Grid -->
+      <div id="reelsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Populated dynamically by JS for clean interactive state -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. CORE PILLARS (MATCHING LOGO) & 4-STEP DONE-FOR-YOU ENGINE -->
+  <section id="pillars" class="py-20 lg:py-28 relative bg-[#07070D] border-t border-white/5">
+    <div class="ambient-orb absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full blur-3xl"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- 3 Core Logo Pillars -->
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-xs font-bold tracking-[0.2em] uppercase text-electricViolet">THE SPARKUGC ARCHITECTURE</span>
+        <h2 class="font-display font-extrabold text-3xl sm:text-5xl mt-2 chrome-text">
+          Three Pillars of Viral Scale
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-24">
+        <!-- Pillar 1: UGC Ads -->
+        <div class="rounded-3xl bg-[#0B0B14] p-8 neon-border-glow hover:neon-border-active transition-all duration-300 group">
+          <div class="w-14 h-14 rounded-2xl bg-neonPurple/15 border border-electricViolet/40 flex items-center justify-center text-electricViolet mb-6 group-hover:scale-110 transition-transform">
+            <!-- Clapperboard Icon matching Logo -->
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <h3 class="font-display font-extrabold text-2xl chrome-text mb-3">UGC Ads</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-5">
+            Native TikTok &amp; Meta Reels engineered with thumb-stopping 3-second visual pattern interrupts, authentic B-roll overlays, and conversion-tested CTAs.
+          </p>
+          <ul class="space-y-2 text-xs font-semibold text-purple-200">
+            <li class="flex items-center gap-2"><span class="text-electricViolet">✦</span> 3–5 Modular Hooks per Video</li>
+            <li class="flex items-center gap-2"><span class="text-electricViolet">✦</span> Native Captions &amp; Sound Design</li>
+          </ul>
+        </div>
+
+        <!-- Pillar 2: AI Creators -->
+        <div class="rounded-3xl bg-[#0B0B14] p-8 neon-border-active relative overflow-hidden group">
+          <div class="absolute top-0 right-0 px-3 py-1 bg-neonPurple text-[10px] font-extrabold uppercase tracking-wider rounded-bl-xl text-white">
+            PROPRIETARY TECH
+          </div>
+          <div class="w-14 h-14 rounded-2xl bg-neonPurple/20 border border-electricViolet/60 flex items-center justify-center text-electricViolet mb-6 group-hover:scale-110 transition-transform">
+            <!-- AI Chip Icon matching Logo -->
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <rect x="6" y="6" width="12" height="12" rx="2"/>
+              <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/>
+              <path stroke-linecap="round" d="M10 10l4 4m0-4l-4 4"/>
+            </svg>
+          </div>
+          <h3 class="font-display font-extrabold text-2xl chrome-text mb-3">AI Creators</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-5">
+            Photorealistic digital spokespeople with natural micro-expressions, emotional inflection, and multi-language lip-syncing across 29+ global markets.
+          </p>
+          <ul class="space-y-2 text-xs font-semibold text-purple-200">
+            <li class="flex items-center gap-2"><span class="text-electricViolet">✦</span> Zero Shipping or Reshoot Delays</li>
+            <li class="flex items-center gap-2"><span class="text-electricViolet">✦</span> Custom Brand Twin Avatars</li>
+          </ul>
+        </div>
+
+        <!-- Pillar 3: Growth -->
+        <div class="rounded-3xl bg-[#0B0B14] p-8 neon-border-glow hover:neon-border-active transition-all duration-300 group">
+          <div class="w-14 h-14 rounded-2xl bg-neonPurple/15 border border-electricViolet/40 flex items-center justify-center text-electricViolet mb-6 group-hover:scale-110 transition-transform">
+            <!-- Growth Chart Icon matching Logo -->
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 17l6-6 4 4 8-8M17 7h4v4"/>
+            </svg>
+          </div>
+          <h3 class="font-display font-extrabold text-2xl chrome-text mb-3">Growth</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-5">
+            Rapid creative velocity eliminates ad fatigue. We analyze thumb-stop ratios, hold rates, and CPA every week to iterate winning angles fast.
+          </p>
+          <ul class="space-y-2 text-xs font-semibold text-purple-200">
+            <li class="flex items-center gap-2"><span class="text-electricViolet">✦</span> Weekly Creative Analytics Loop</li>
+            <li class="flex items-center gap-2"><span class="text-electricViolet">✦</span> Lower CPA by up to 44%</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 4-Step Done-For-You Engine -->
+      <div id="process" class="pt-6">
+        <div class="text-center max-w-3xl mx-auto mb-14">
+          <span class="text-xs font-bold tracking-[0.2em] uppercase text-electricViolet">WORKFLOW</span>
+          <h2 class="font-display font-extrabold text-3xl sm:text-4xl mt-2 chrome-text">
+            4-Step Done-For-You Creative Engine
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="rounded-2xl bg-[#0B0B13] border border-white/10 p-6 relative hover:border-electricViolet/60 transition-colors">
+            <span class="font-display font-extrabold text-4xl neon-purple-text opacity-90">01</span>
+            <h4 class="font-display font-bold text-lg text-white mt-3">Hook &amp; Angle Research</h4>
+            <p class="text-xs sm:text-sm text-gray-400 mt-2 leading-relaxed">
+              We audit your competitor ad libraries, customer reviews, and pain points to script high-converting angles.
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-[#0B0B13] border border-white/10 p-6 relative hover:border-electricViolet/60 transition-colors">
+            <span class="font-display font-extrabold text-4xl neon-purple-text opacity-90">02</span>
+            <h4 class="font-display font-bold text-lg text-white mt-3">AI Creator &amp; Voice Cloning</h4>
+            <p class="text-xs sm:text-sm text-gray-400 mt-2 leading-relaxed">
+              We match your demographic with hyper-realistic AI avatars and lifelike voice synthesis tuned for emotion.
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-[#0B0B13] border border-white/10 p-6 relative hover:border-electricViolet/60 transition-colors">
+            <span class="font-display font-extrabold text-4xl neon-purple-text opacity-90">03</span>
+            <h4 class="font-display font-bold text-lg text-white mt-3">Direct-Response Editing</h4>
+            <p class="text-xs sm:text-sm text-gray-400 mt-2 leading-relaxed">
+              Human performance editors weave product demos, dynamic captions, SFX, and multiple hook variations.
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-[#0B0B13] border border-white/10 p-6 relative hover:border-electricViolet/60 transition-colors">
+            <span class="font-display font-extrabold text-4xl neon-purple-text opacity-90">04</span>
+            <h4 class="font-display font-bold text-lg text-white mt-3">Creative Testing &amp; ROAS Scaling</h4>
+            <p class="text-xs sm:text-sm text-gray-400 mt-2 leading-relaxed">
+              Launch within 48 hours, isolate winning hooks, and rapidly spin out fresh variations to scale profitably.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. INTERACTIVE ROAS & COST SAVINGS CALCULATOR -->
+  <section id="calculator" class="py-20 lg:py-28 relative border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-xs font-bold tracking-[0.2em] uppercase text-electricViolet">CREATIVE ROI SIMULATOR</span>
+        <h2 class="font-display font-extrabold text-3xl sm:text-5xl mt-2 chrome-text">
+          Calculate Your AI Creative Edge
+        </h2>
+        <p class="text-gray-400 mt-3 text-sm sm:text-base">
+          Compare traditional UGC agency retainers and creator shipping bottlenecks against SparkUGC’s high-velocity AI hybrid model.
+        </p>
+      </div>
+
+      <div class="rounded-3xl bg-[#0B0B14] neon-border-glow p-6 sm:p-10 lg:p-12 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <!-- Interactive Sliders (7 Cols) -->
+        <div class="lg:col-span-7 space-y-8">
+          <!-- Slider 1: Monthly Ad Spend -->
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <label for="adSpendRange" class="text-sm font-semibold text-gray-200">Monthly Paid Social Ad Spend</label>
+              <span id="adSpendDisplay" class="font-display font-extrabold text-xl neon-purple-text">$25,000</span>
+            </div>
+            <input id="adSpendRange" type="range" min="5000" max="250000" step="5000" value="25000" class="w-full" />
+            <div class="flex justify-between text-[11px] text-gray-500 mt-1.5">
+              <span>$5K/mo</span>
+              <span>$125K/mo</span>
+              <span>$250K/mo</span>
+            </div>
+          </div>
+
+          <!-- Slider 2: Monthly Video Variants -->
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <label for="variantsRange" class="text-sm font-semibold text-gray-200">Ad Video Variants Needed / Month</label>
+              <span id="variantsDisplay" class="font-display font-extrabold text-xl chrome-text">20 Videos</span>
+            </div>
+            <input id="variantsRange" type="range" min="5" max="80" step="5" value="20" class="w-full" />
+            <div class="flex justify-between text-[11px] text-gray-500 mt-1.5">
+              <span>5 Videos</span>
+              <span>40 Videos</span>
+              <span>80 Videos</span>
+            </div>
+          </div>
+
+          <!-- Slider 3: Traditional Creator Cost Per Video -->
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <label for="tradCostRange" class="text-sm font-semibold text-gray-200">Current Avg. Cost per Traditional UGC Video</label>
+              <span id="tradCostDisplay" class="font-display font-extrabold text-xl chrome-text">$350 / video</span>
+            </div>
+            <input id="tradCostRange" type="range" min="150" max="800" step="25" value="350" class="w-full" />
+            <div class="flex justify-between text-[11px] text-gray-500 mt-1.5">
+              <span>$150 (Raw)</span>
+              <span>$450 (Edited)</span>
+              <span>$800 (Agency)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Output Panel (5 Cols) -->
+        <div class="lg:col-span-5 rounded-2xl bg-gradient-to-b from-[#150C26] to-[#08080F] neon-border-active p-6 sm:p-8 space-y-6">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-purple-300">Estimated Monthly Production Savings</span>
+            <div id="monthlySavings" class="font-display font-extrabold text-4xl sm:text-5xl text-white mt-1 drop-shadow-[0_0_16px_rgba(184,41,255,0.6)]">
+              $5,340
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
+            <div>
+              <span class="text-[11px] uppercase tracking-wider text-gray-400 block">Extra Hooks Tested</span>
+              <span id="extraHooks" class="font-display font-extrabold text-2xl neon-purple-text mt-0.5 block">+60 Hooks</span>
+            </div>
+            <div>
+              <span class="text-[11px] uppercase tracking-wider text-gray-400 block">Projected ROAS Lift</span>
+              <span id="roasLift" class="font-display font-extrabold text-2xl chrome-text mt-0.5 block">+1.8x ROAS</span>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <button onclick="openBriefModal('Custom ROI Plan')" class="w-full py-3.5 px-5 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-deepViolet via-neonPurple to-electricViolet shadow-neon hover:shadow-neon-strong transition-all cursor-pointer">
+              Lock In These Savings →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. TRANSPARENT PRICING PACKAGES -->
+  <section id="pricing" class="py-20 lg:py-28 relative bg-[#07070D] border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold tracking-[0.2em] uppercase text-electricViolet">TRANSPARENT PACKAGES</span>
+        <h2 class="font-display font-extrabold text-3xl sm:text-5xl mt-2 chrome-text">
+          Scale Without Retainer Bloat
+        </h2>
+        <p class="text-gray-400 mt-3 text-sm sm:text-base">
+          Full commercial ad rights, raw hook variations, and 48-hour rapid turnaround included on every tier.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+        <!-- Tier 1: Starter Spark -->
+        <div class="rounded-3xl bg-[#0B0B14] border border-white/10 p-8 flex flex-col justify-between hover:border-electricViolet/50 transition-all">
+          <div>
+            <div class="flex items-center justify-between">
+              <h3 class="font-display font-extrabold text-xl chrome-text">Starter Spark</h3>
+              <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/5 text-gray-300">Testing</span>
+            </div>
+            <p class="text-gray-400 text-xs mt-2">Ideal for DTC brands validating new winning ad angles fast.</p>
+
+            <div class="my-6 flex items-baseline gap-1">
+              <span class="font-display font-extrabold text-4xl text-white">$990</span>
+              <span class="text-sm text-gray-400">/month</span>
+            </div>
+
+            <ul class="space-y-3.5 text-sm text-gray-300 border-t border-white/10 pt-6">
+              <li class="flex items-start gap-2.5">
+                <span class="text-electricViolet font-bold">✓</span>
+                <span><strong>10 AI UGC Videos</strong> per month</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-electricViolet font-bold">✓</span>
+                <span><strong>3 Hook Variations</strong> per video (30 assets)</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-electricViolet font-bold">✓</span>
+                <span>Access to 1,000+ AI Creators &amp; Voices</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-electricViolet font-bold">✓</span>
+                <span>Direct-Response Scriptwriting &amp; Captions</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-electricViolet font-bold">✓</span>
+                <span>48-Hour Delivery Turnaround</span>
+              </li>
+            </ul>
+          </div>
+
+          <button onclick="openBriefModal('Starter Spark ($990/mo)')" class="mt-8 w-full py-3.5 rounded-full font-bold text-sm text-white bg-white/5 hover:bg-white/10 border border-white/15 transition-all cursor-pointer">
+            Select Starter Spark
+          </button>
+        </div>
+
+        <!-- Tier 2: Growth Engine (Most Popular) -->
+        <div class="rounded-3xl bg-gradient-to-b from-[#160C28] to-[#0B0B14] neon-border-active p-8 flex flex-col justify-between relative lg:-translate-y-3 shadow-neon">
+          <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-deepViolet via-neonPurple to-electricViolet text-[11px] font-extrabold uppercase tracking-widest text-white shadow-neon">
+            MOST POPULAR
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between">
+              <h3 class="font-display font-extrabold text-2xl chrome-text">Growth Engine</h3>
+              <span class="text-xs font-bold px-3 py-1 rounded-full bg-neonPurple/25 text-purple-200 border border-electricViolet/40">Scaling</span>
+            </div>
+            <p class="text-gray-300 text-xs mt-2">Built for performance teams spending $15k–$100k/mo on Meta &amp; TikTok.</p>
+
+            <div class="my-6 flex items-baseline gap-1">
+              <span class="font-display font-extrabold text-5xl neon-purple-text">$2,490</span>
+              <span class="text-sm text-gray-400">/month</span>
+            </div>
+
+            <ul class="space-y-3.5 text-sm text-gray-200 border-t border-white/10 pt-6">
+              <li class="flex items-start gap-2.5">
+                <span class="text-electricViolet font-bold">✓</span>
+                <span><strong>30 AI + Hybrid UGC Videos</strong> per month</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-electricViolet font-bold">✓</span>
+                <span><strong>4 Hook + CTA Variations</strong> per video (120 assets)</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-electricViolet font-bold">✓</span>
+                <span><strong>Dedicated Creative Strategist</strong> &amp; Slack Channel</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-electricViolet font-bold">✓</span>
+                <span>Weekly Ad Account Creative Audit &amp; Iterations</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-electricViolet font-bold">✓</span>
+                <span>Multi-Language Localization (EN, ES, FR, DE)</span>
+              </li>
+            </ul>
+          </div>
+
+          <button onclick="openBriefModal('Growth Engine ($2,490/mo)')" class="mt-8 w-full py-4 rounded-full font-bold text-sm text-white bg-gradient-to-r from-deepViolet via-neonPurple to-electricViolet shadow-neon hover:shadow-neon-strong transition-all cursor-pointer">
+            Launch Growth Engine
+          </button>
+        </div>
+
+        <!-- Tier 3: Scale Studio -->
+        <div class="rounded-3xl bg-[#0B0B14] border border-white/10 p-8 flex flex-col justify-between hover:border-electricViolet/50 transition-all">
+          <div>
+            <div class="flex items-center justify-between">
+              <h3 class="font-display font-extrabold text-xl chrome-text">Scale Studio</h3>
+              <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/5 text-gray-300">Enterprise</span>
+            </div>
+            <p class="text-gray-400 text-xs mt-2">High-frequency creative pod with custom brand avatar cloning.</p>
+
+            <div class="my-6 flex items-baseline gap-1">
+              <span class="font-display font-extrabold text-4xl text-white">$4,990</span>
+              <span class="text-sm text-gray-400">/month</span>
+            </div>
+
+            <ul class="space-y-3.5 text-sm text-gray-300 border-t border-white/10 pt-6">
+              <li class="flex items-start gap-2.5">
+                <span class="text-electricViolet font-bold">✓</span>
+                <span><strong>60+ Videos &amp; Unlimited Iterations</strong></span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-electricViolet font-bold">✓</span>
+                <span><strong>Custom Exclusive Brand AI Avatar</strong> (Founder/Model Twin)</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-electricViolet font-bold">✓</span>
+                <span>24-Hour Priority Express Turnaround</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-electricViolet font-bold">✓</span>
+                <span>Whitelisting / Spark Ads Handle Setup</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-electricViolet font-bold">✓</span>
+                <span>Full Raw Project Files &amp; Perpetual Usage</span>
+              </li>
+            </ul>
+          </div>
+
+          <button onclick="openBriefModal('Scale Studio ($4,990/mo)')" class="mt-8 w-full py-3.5 rounded-full font-bold text-sm text-white bg-white/5 hover:bg-white/10 border border-white/15 transition-all cursor-pointer">
+            Apply for Scale Studio
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. FOOTER -->
+  <footer class="bg-[#040407] border-t border-white/10 pt-16 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 pb-12 border-b border-white/10">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <span class="font-display font-extrabold italic text-2xl chrome-text">Spark</span>
+            <span class="font-display font-extrabold italic text-2xl neon-purple-text">UGC</span>
+            <span class="text-[10px] font-bold text-gray-400">TM</span>
+          </div>
+          <p class="text-xs tracking-[0.18em] text-gray-400 uppercase mt-1.5">
+            Real Stories. AI Creators. Viral Results.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-6 text-sm text-gray-400">
+          <a href="#showcase" class="hover:text-white transition-colors">AI Reels</a>
+          <a href="#pillars" class="hover:text-white transition-colors">Services</a>
+          <a href="#process" class="hover:text-white transition-colors">4-Step Engine</a>
+          <a href="#calculator" class="hover:text-white transition-colors">ROI Calculator</a>
+          <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
+        </div>
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+        <p>© 2026 SparkUGC™ AI UGC Ads &amp; Creative Agency. All rights reserved.</p>
+        <div class="flex items-center gap-5">
+          <span>UGC Ads</span>
+          <span>•</span>
+          <span>AI Creators</span>
+          <span>•</span>
+          <span>Growth</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- INTERACTIVE CAMPAIGN BRIEF / STRATEGY CALL MODAL -->
+  <div id="briefModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+    <div class="relative w-full max-w-lg rounded-3xl bg-[#0C0C16] neon-border-active p-6 sm:p-8 shadow-2xl">
+      <!-- Close Button -->
+      <button onclick="closeBriefModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white cursor-pointer" aria-label="Close Modal">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <!-- Modal Form View -->
+      <div id="modalFormContainer">
+        <span id="modalBadge" class="inline-block px-3 py-1 rounded-full bg-neonPurple/20 border border-electricViolet/40 text-[11px] font-bold uppercase tracking-wider text-purple-200 mb-3">
+          Strategy Call
+        </span>
+        <h3 class="font-display font-extrabold text-2xl sm:text-3xl chrome-text">
+          Launch Your AI UGC Campaign
+        </h3>
+        <p class="text-xs sm:text-sm text-gray-400 mt-1.5">
+          Tell us about your brand and we’ll prepare 3 custom AI hook concepts before our call.
+        </p>
+
+        <form id="campaignBriefForm" class="mt-6 space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 mb-1.5">Your Name *</label>
+              <input type="text" required placeholder="Alex Morgan" class="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-electricViolet" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 mb-1.5">Work Email *</label>
+              <input type="email" required placeholder="alex@yourbrand.com" class="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-electricViolet" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 mb-1.5">Brand Niche</label>
+              <select id="modalNiche" class="w-full px-4 py-2.5 rounded-xl bg-[#131320] border border-white/10 text-sm text-white focus:outline-none focus:border-electricViolet">
+                <option value="Skincare & Beauty">Skincare &amp; Beauty</option>
+                <option value="SaaS & Mobile Apps">SaaS &amp; Mobile Apps</option>
+                <option value="E-Commerce / DTC">E-Commerce / DTC</option>
+                <option value="Health & Fitness">Health &amp; Fitness</option>
+                <option value="Other High-Growth">Other High-Growth</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 mb-1.5">Monthly Ad Spend</label>
+              <select class="w-full px-4 py-2.5 rounded-xl bg-[#131320] border border-white/10 text-sm text-white focus:outline-none focus:border-electricViolet">
+                <option value="$5k - $15k/mo">$5k – $15k / mo</option>
+                <option value="$15k - $50k/mo" selected>$15k – $50k / mo</option>
+                <option value="$50k - $150k/mo">$50k – $150k / mo</option>
+                <option value="$150k+/mo">$150k+ / mo</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-gray-300 mb-1.5">Product URL or Cloned Hook Notes</label>
+            <textarea id="modalNotes" rows="3" placeholder="e.g., https://lumaskin.co — Interested in testing 3 founder-style AI hooks..." class="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-electricViolet"></textarea>
+          </div>
+
+          <button type="submit" class="w-full py-3.5 rounded-full font-bold text-sm text-white bg-gradient-to-r from-deepViolet via-neonPurple to-electricViolet shadow-neon hover:shadow-neon-strong transition-all cursor-pointer">
+            Get My 3 Free AI Hook Concepts →
+          </button>
+        </form>
+      </div>
+
+      <!-- Instant Confirmation Feedback State -->
+      <div id="modalSuccessContainer" class="hidden text-center py-8 space-y-4">
+        <div class="w-16 h-16 rounded-full bg-neonPurple/25 border border-electricViolet mx-auto flex items-center justify-center text-electricViolet shadow-neon">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <h3 class="font-display font-extrabold text-2xl chrome-text">Brief Locked In!</h3>
+        <p class="text-sm text-gray-300 max-w-sm mx-auto leading-relaxed">
+          Our Creative Strategist is already scripting your 3 custom AI UGC hooks. Check your inbox within 2 hours for your preview deck &amp; calendar link.
+        </p>
+        <button onclick="closeBriefModal()" class="mt-4 px-7 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-white/10 hover:bg-white/15 text-white cursor-pointer">
+          Back to SparkUGC
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE APPLICATION SCRIPT -->
+  <script>
+    // 1. AI UGC Reels Dataset (9:16 Vertical Simulator Cards)
+    const aiReelsData = [
+      {
+        id: 1,
+        category: 'skincare',
+        categoryLabel: 'Skincare & Beauty',
+        creatorName: 'Maya V. (AI Twin v4)',
+        roas: '9.4x ROAS',
+        ctr: '4.8% CTR',
+        hookText: '"Stop wasting $120 on luxury serums when this peptide drop fixes barrier damage in 4 days..."',
+        gradient: 'from-[#2A0E4A] via-[#130824] to-[#080810]',
+        avatarHue: 'from-fuchsia-500 to-purple-700',
+        duration: '0:24'
+      },
+      {
+        id: 2,
+        category: 'saas',
+        categoryLabel: 'SaaS & Apps',
+        creatorName: 'Liam K. (Founder AI)',
+        roas: '7.9x ROAS',
+        ctr: '3.9% CTR',
+        hookText: '"I replaced 4 messy spreadsheets with one AI dashboard that saves our ops team 14 hours a week."',
+        gradient: 'from-[#1E1042] via-[#0D0A21] to-[#080810]',
+        avatarHue: 'from-violet-500 to-indigo-700',
+        duration: '0:31'
+      },
+      {
+        id: 3,
+        category: 'ecom',
+        categoryLabel: 'E-Commerce / DTC',
+        creatorName: 'Chloe R. (Hybrid AI)',
+        roas: '11.2x ROAS',
+        ctr: '5.3% CTR',
+        hookText: '"TikTok made me buy this portable espresso maker—here is my brutally honest 7-day test."',
+        gradient: 'from-[#320D4F] via-[#150826] to-[#080810]',
+        avatarHue: 'from-purple-400 to-fuchsia-700',
+        duration: '0:19'
+      },
+      {
+        id: 4,
+        category: 'fitness',
+        categoryLabel: 'Fitness',
+        creatorName: 'Marcus T. (Coach AI)',
+        roas: '8.6x ROAS',
+        ctr: '4.4% CTR',
+        hookText: '"Why 90% of pre-workouts crash your focus by 2 PM—and the clean electrolyte switch pros use."',
+        gradient: 'from-[#240B3B] via-[#10071C] to-[#080810]',
+        avatarHue: 'from-indigo-500 to-purple-700',
+        duration: '0:27'
+      }
+    ];
+
+    let activePlayingId = 1; // First card animates by default
+
+    function renderReels(filter = 'all') {
+      const grid = document.getElementById('reelsGrid');
+      const filtered = filter === 'all' ? aiReelsData : aiReelsData.filter(item => item.category === filter);
+
+      grid.innerHTML = filtered.map(reel => {
+        const isPlaying = reel.id === activePlayingId;
+        return `
+          <div class="group relative rounded-[28px] bg-[#0B0B14] ${isPlaying ? 'neon-border-active' : 'neon-border-glow'} p-3 transition-all duration-300 flex flex-col">
+            <!-- 9:16 Simulated Vertical Video Viewport -->
+            <div onclick="toggleReelPlay(${reel.id})" class="relative aspect-[9/16] w-full rounded-[22px] bg-gradient-to-b ${reel.gradient} overflow-hidden cursor-pointer flex flex-col justify-between p-4 select-none">
+              
+              <!-- Subtle Animated Ambient Glow inside Phone -->
+              <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(184,41,255,0.28),transparent_65%)] ${isPlaying ? 'animate-pulse' : ''}"></div>
+
+              <!-- Top Performance Badges -->
+              <div class="relative z-10 flex items-center justify-between gap-2">
+                <span class="px-2.5 py-1 rounded-full bg-black/65 backdrop-blur-md border border-electricViolet/50 text-[11px] font-extrabold text-purple-200">
+                  ${reel.roas}
+                </span>
+                <span class="px-2.5 py-1 rounded-full bg-black/65 backdrop-blur-md border border-white/15 text-[11px] font-bold text-gray-200">
+                  ${reel.ctr}
+                </span>
+              </div>
+
+              <!-- Center Simulated AI Avatar Silhouette + Play/Pause Control -->
+              <div class="relative z-10 flex flex-col items-center justify-center my-auto text-center">
+                <div class="relative w-20 h-20 rounded-full bg-gradient-to-tr ${reel.avatarHue} p-0.5 shadow-neon mb-3">
+                  <div class="w-full h-full rounded-full bg-[#0D0B18] flex items-center justify-center">
+                    <!-- Stylized AI Creator Portrait Icon -->
+                    <svg class="w-10 h-10 text-purple-200" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+                    </svg>
+                  </div>
+                  <!-- Play/Pause Floating Pill -->
+                  <button type="button" aria-label="Toggle Preview" class="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-neonPurple text-white flex items-center justify-center shadow-neon border border-white/40">
+                    ${isPlaying
+                      ? '<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>'
+                      : '<svg class="w-3.5 h-3.5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>'
+                    }
+                  </button>
+                </div>
+                <span class="text-[11px] font-bold tracking-wide text-white/90 bg-black/50 px-2.5 py-0.5 rounded-full">
+                  ${reel.creatorName}
+                </span>
+              </div>
+
+              <!-- Bottom Hook Caption Overlay + Voiceover Waveform -->
+              <div class="relative z-10 space-y-2.5">
+                <!-- Live Hook Caption Box -->
+                <div class="p-3 rounded-xl bg-black/75 backdrop-blur-md border border-white/15">
+                  <div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-electricViolet mb-1">
+                    <span>0:00–0:03 HOOK</span>
+                    <span>${isPlaying ? '● AI VOICE LIVE' : reel.duration}</span>
+                  </div>
+                  <p class="text-xs font-semibold text-white leading-snug">
+                    ${reel.hookText}
+                  </p>
+                </div>
+
+                <!-- Simulated Audio Waveform Visualizer -->
+                <div class="flex items-center justify-between gap-1 px-2 py-1.5 rounded-lg bg-black/60 border border-white/10 ${isPlaying ? '' : 'paused-wave'}">
+                  <div class="flex items-center gap-[3px] h-4 flex-1 justify-center">
+                    ${Array.from({ length: 18 }).map((_, idx) => `<span class="wave-bar w-1 h-full rounded-full bg-gradient-to-t from-deepViolet to-electricViolet" style="animation-delay: ${(idx * 0.08).toFixed(2)}s"></span>`).join('')}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Footer Actions -->
+            <div class="pt-3 px-1 flex items-center justify-between gap-2">
+              <span class="text-[11px] font-medium text-gray-400">${reel.categoryLabel}</span>
+              <button onclick="cloneHook('${reel.categoryLabel}', ${reel.id})" class="px-3 py-1.5 rounded-full text-xs font-bold text-purple-200 bg-neonPurple/20 hover:bg-neonPurple hover:text-white border border-electricViolet/40 transition-all cursor-pointer">
+                Clone This Hook
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleReelPlay(id) {
+      activePlayingId = activePlayingId === id ? null : id;
+      const activeTab = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
+      renderReels(activeTab);
+    }
+
+    // Filter Tabs Event Handling
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => {
+          b.classList.remove('active', 'bg-gradient-to-r', 'from-deepViolet', 'to-neonPurple', 'text-white', 'shadow-neon');
+          b.classList.add('bg-white/5', 'text-gray-300', 'border', 'border-white/10');
+        });
+        btn.classList.add('active', 'bg-gradient-to-r', 'from-deepViolet', 'to-neonPurple', 'text-white', 'shadow-neon');
+        btn.classList.remove('bg-white/5', 'text-gray-300', 'border', 'border-white/10');
+        renderReels(btn.dataset.filter);
+      });
+    });
+
+    // Clone Hook Action -> Opens Modal Pre-Filled + Shows Toast
+    function cloneHook(category, id) {
+      const reel = aiReelsData.find(r => r.id === id);
+      openBriefModal('Clone Winning Hook');
+      const notesField = document.getElementById('modalNotes');
+      if (reel && notesField) {
+        notesField.value = `Cloned Hook (${reel.roas}): ${reel.hookText}`;
+      }
+      showToast(`Hook #${id} loaded into your campaign brief!`);
+    }
+
+    // 2. Interactive ROAS & Cost Savings Calculator
+    const adSpendRange = document.getElementById('adSpendRange');
+    const variantsRange = document.getElementById('variantsRange');
+    const tradCostRange = document.getElementById('tradCostRange');
+
+    function updateCalculator() {
+      const spend = Number(adSpendRange.value);
+      const variants = Number(variantsRange.value);
+      const tradCostPerVideo = Number(tradCostRange.value);
+
+      // Update slider readouts
+      document.getElementById('adSpendDisplay').textContent = `$${spend.toLocaleString()}`;
+      document.getElementById('variantsDisplay').textContent = `${variants} Videos`;
+      document.getElementById('tradCostDisplay').textContent = `$${tradCostPerVideo} / video`;
+
+      // Traditional cost vs SparkUGC ~$83/video effective blended rate
+      const traditionalTotal = variants * tradCostPerVideo;
+      const sparkUgcTotal = Math.round(variants * 83);
+      const savings = Math.max(450, traditionalTotal - sparkUgcTotal);
+
+      // Extra hooks (3 modular hooks per video) & ROAS lift estimate
+      const extraHooks = variants * 3;
+      const projectedLift = (1.2 + (variants / 80) * 1.4).toFixed(1);
+
+      document.getElementById('monthlySavings').textContent = `$${savings.toLocaleString()}`;
+      document.getElementById('extraHooks').textContent = `+${extraHooks} Hooks`;
+      document.getElementById('roasLift').textContent = `+${projectedLift}x ROAS`;
+    }
+
+    [adSpendRange, variantsRange, tradCostRange].forEach(slider => {
+      slider.addEventListener('input', updateCalculator);
+    });
+
+    // 3. Modal & Mobile Menu Controls
+    function openBriefModal(sourceLabel = 'Strategy Call') {
+      const modal = document.getElementById('briefModal');
+      document.getElementById('modalBadge').textContent = sourceLabel;
+      document.getElementById('modalFormContainer').classList.remove('hidden');
+      document.getElementById('modalSuccessContainer').classList.add('hidden');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeBriefModal() {
+      const modal = document.getElementById('briefModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    document.getElementById('campaignBriefForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('modalFormContainer').classList.add('hidden');
+      document.getElementById('modalSuccessContainer').classList.remove('hidden');
+      showToast('Strategy brief submitted! Check your inbox shortly.');
+    });
+
+    // Close modal when clicking backdrop
+    document.getElementById('briefModal').addEventListener('click', (e) => {
+      if (e.target.id === 'briefModal') closeBriefModal();
+    });
+
+    function toggleMobileMenu() {
+      document.getElementById('mobileMenu').classList.toggle('hidden');
+    }
+    document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
+
+    // Custom Toast Notification Helper
+    let toastTimeout;
+    function showToast(msg) {
+      const banner = document.getElementById('toastBanner');
+      document.getElementById('toastMessage').textContent = msg;
+      banner.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        banner.classList.remove('translate-y-4', 'opacity-0');
+      });
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        banner.classList.add('translate-y-4', 'opacity-0');
+        setTimeout(() => banner.classList.add('hidden'), 300);
+      }, 3200);
+    }
+
+    // Initialize on load
+    renderReels('all');
+    updateCalculator();
+  </script>
+</body>
+</html>
